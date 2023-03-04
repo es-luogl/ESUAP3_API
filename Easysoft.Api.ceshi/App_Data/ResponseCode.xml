@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResponseCode description="响应码参照表">
+  <code description="成功">200</code>
+  <code description="请求参数不能为空">201</code>
+  <code description="请求参数格式不正确,缺少head">202</code>
+  <code description="请求参数格式不正确,缺少body">203</code>
+  <code description="签名校验失败">210</code>
+  <code description="参数method不能为空">211</code>
+  <code description="XXX(必填参数)不能为空">220</code>
+  <code description="未传入身份(Authorization)请求头">301</code>
+  <code description="传入的token无效">303</code>
+  <code description="传入的token已超过有效时限">304</code>
+  <code description="应用标识(appid)无效">310</code>
+  <code description="应用密钥(appkey)无效">311</code>
+  <code description="您访问的接口不存在">404</code>
+  <code description="系统异常,描述：XXX">502</code>
+</ResponseCode>

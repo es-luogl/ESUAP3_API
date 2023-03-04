@@ -9,7 +9,7 @@ namespace Easysoft.Api.ceshi.Controllers
     public class GetTokenController : ApiController
     {
         [HttpGet]
-        [Route("ceshi/getToken")]
+        [Route("aouth2/getToken")]
         public object GetToken()
         {
             HttpContext.Current.Response.Headers.Remove("Server");
@@ -19,9 +19,9 @@ namespace Easysoft.Api.ceshi.Controllers
             string appid = BasicHelper.GetRequestParams("appid");
             string appkey = BasicHelper.GetRequestParams("appkey");
             if (appid != Startup.appid)
-                return new RSP_Message { code = 401101, message = "应用ID无效" };
+                return new RSP_Message { code = 310, message = "应用标识(appid)无效!" };
             if (appkey != Startup.appkey)
-                return new RSP_Message { code = 401102, message = "应用密钥无效" };
+                return new RSP_Message { code = 311, message = "应用密钥(appkey)无效!" };
 
             string evidence = EncryptUtil.MD5(appid + "&" + appkey).ToLower(); //凭据
             string expires_time = BasicHelper.GetTimestamp(DateTime.Now.AddSeconds(Startup.expires_in)); //token有效期

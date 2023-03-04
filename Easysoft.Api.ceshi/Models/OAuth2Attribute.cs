@@ -31,19 +31,18 @@ namespace Easysoft.Api.ceshi
             }
             //从http请求的头里面获取身份验证信息，验证是否是请求发起方的ticket
             var authorization = context.Request.Headers.Authorization;
-            if (authorization == null || authorization.Parameter == null)
+            if (authorization == null)
             {
-                code = 412001; message = "没有访问权限"; HandleUnauthorizedRequest(context); return;
+                code = 301; message = "未传入身份(Authorization)请求头"; HandleUnauthorizedRequest(context); return;
             }
             try
             {
                 string evidence = EncryptUtil.MD5(Startup.appid + "&" + Startup.appkey).ToLower(); //token的凭据
-                var encryptTicket = authorization.Parameter; //获取Ticket票据
-                string token = DecryptUtil.AES(encryptTicket, Startup.secretkey);
+                string token = DecryptUtil.AES(authorization.Scheme, Startup.secretkey);
                 JObject jObject = JObject.Parse(token);
-                if (evidence.Equals(jObject["evidence"].ToString().ToLower()))
+                if (!evidence.Equals(jObject["evidence"].ToString().ToLower()))
                 {
-                    code = 401104; message = "无效的Access_Token"; HandleUnauthorizedRequest(context); return;
+                    code = 303; message = "传入的token无效!"; HandleUnauthorizedRequest(context); return;
                 }
                 DateTime expiresTime = BasicHelper.ConvertTimeStamp(jObject["expires_time"].ToString());
                 if (expiresTime.Subtract(DateTime.Now).TotalSeconds >= 0)
@@ -51,9 +50,9 @@ namespace Easysoft.Api.ceshi
                     base.IsAuthorized(context);
                     return;
                 }
-                else { code = 200408; message = "Access_Token已超时。"; HandleUnauthorizedRequest(context); return; }
+                else { code = 304; message = "传入的token已超过有效时限!"; HandleUnauthorizedRequest(context); return; }
             }
-            catch { code = 401104; message = "无效的Access_Token。"; HandleUnauthorizedRequest(context); return; }
+            catch { code = 303; message = "传入的token无效!"; HandleUnauthorizedRequest(context); return; }
         }
         protected override void HandleUnauthorizedRequest(HttpActionContext context)
         {
