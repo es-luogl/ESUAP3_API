@@ -95,9 +95,11 @@
   <ItemGroup>
     <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\GetTokenController.cs" />
+    <Compile Include="Controllers\LocalTestController.cs" />
     <Compile Include="Models\BasicHelper.cs" />
-    <Compile Include="Models\esuap3\ChargeUtil.cs" />
+    <Compile Include="Models\esUap3\ChargeUtil.cs" />
     <Compile Include="Models\OAuth2Attribute.cs" />
+    <Compile Include="Models\TestUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

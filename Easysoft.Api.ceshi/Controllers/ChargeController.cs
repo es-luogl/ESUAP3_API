@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 
@@ -52,7 +51,7 @@ namespace Easysoft.Api.ceshi.Controllers
                         else
                         {
                             string method = req_data["head"]["method"] == null ? "" : req_data["head"]["method"].ToString();
-                            esuap3.ChargeUtil charge = new esuap3.ChargeUtil();
+                            esUap3.ChargeUtil charge = new esUap3.ChargeUtil();
                             switch (method)
                             {
                                 case "QueryChargeBill": rsp_body = charge.QueryChargeBill(req_body, body); break;

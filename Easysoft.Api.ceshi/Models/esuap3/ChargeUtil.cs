@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Easysoft.Api.ceshi.esuap3
+namespace Easysoft.Api.ceshi.esUap3
 {
     /// <summary>
     /// 收费接口工具类
@@ -34,8 +34,7 @@ namespace Easysoft.Api.ceshi.esuap3
                     string fullPath = AppDomain.CurrentDomain.BaseDirectory + "App_Data\\dataTable.json";
                     string fullJson = Regex.Unescape(File.ReadAllText(fullPath, Encoding.GetEncoding("utf-8")).Trim());
 
-                    DataTable dtTable = BuildTempDataTable("esTemp_Table2023030300001");
-                    DataTable dt = BasicHelper.JArrayToDataTable(fullJson, dtTable);
+                    DataTable dt = BasicHelper.JsonToDataTable(fullJson, "esTemp_Table2023030300001");
 
                     //JObject dt = new JObject(){{"feeId","JF202302010000000001"},{"project","高层物业费"},{"amount",256.00},{"lateAmount",0},{"inputDate","2023-02-01"},{"objectName","1-1-1001"},{"ownerName","李四"},{"feeDesc","2023-02-01至2023-02-28"}};
                     JObject body = new JObject() { { "datas", BasicHelper.FnDataTableToJArray(dt) } };
@@ -46,21 +45,6 @@ namespace Easysoft.Api.ceshi.esuap3
             //// 写日志
             //finally { BasicHelper.SetWriteTxtLog("", ""); }
             return rsp_body;
-        }
-
-        private DataTable BuildTempDataTable(string name)
-        {
-            DataTable dt = new DataTable(name);
-            dt.Columns.Add(new DataColumn("id", typeof(int)));
-            dt.Columns.Add(new DataColumn("name", typeof(string)));
-            dt.Columns.Add(new DataColumn("age", typeof(int)));
-            dt.Columns.Add(new DataColumn("birth", typeof(string)));
-            dt.Columns.Add(new DataColumn("语文", typeof(int)));
-            dt.Columns.Add(new DataColumn("数学", typeof(int)));
-            dt.Columns.Add(new DataColumn("英语", typeof(int)));
-            dt.Columns.Add(new DataColumn("理科综合", typeof(int)));
-            dt.Columns.Add(new DataColumn("文科综合", typeof(int)));
-            return dt;
         }
     }
 }
